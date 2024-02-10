@@ -24,8 +24,10 @@ class ProductController extends Controller
     public function create()
     {
         $data['categories'] = Category::get();
+        $data['model'] = null;
+        $data['route'] = route('product.store');
 
-        return view('pages.products.create', $data);
+        return view('pages.products.form', $data);
     }
 
     /**
@@ -76,9 +78,10 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $data['categories'] = Category::get();
-        $data['product'] = Product::find($id);
+        $data['model'] = Product::find($id);
+        $data['route'] = route('product.update', $data['model']->id);
 
-        return view('pages.products.edit', $data);
+        return view('pages.products.form', $data);
     }
 
     /**
@@ -102,6 +105,8 @@ class ProductController extends Controller
         $product->category_id = $request->category_id;
         $product->is_favorite = $request->is_favorite;
         $product->status = $request->status;
+
+        $product->save();
 
         if ($request->hasFile('image')) {
             $test = $request->file('image');

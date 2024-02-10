@@ -23,7 +23,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('pages.user.create');
+        $data['model'] = null;
+        $data['route'] = route('user.store');
+
+        return view('pages.user.form', $data);
     }
 
     /**
@@ -62,8 +65,10 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        $user = User::find($id);
-        return view('pages.user.edit', compact('user'));
+        $data['model'] = User::find($id);
+        $data['route'] = route('user.update', $data['model']->id);
+
+        return view('pages.user.form', $data);
     }
 
     /**

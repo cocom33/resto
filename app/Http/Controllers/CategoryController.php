@@ -22,6 +22,10 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $data['model'] = null;
+        $data['route'] = route('category.store');
+
+        return view('pages.category.form', $data);
     }
 
     /**
@@ -56,9 +60,10 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $category = Category::find($id);
+        $data['model'] = Category::find($id);
+        $data['route'] = route('category.update', $data['model']->id);
 
-        return view('pages.category.edit', compact('category'));
+        return view('pages.category.form', $data);
     }
 
     /**
